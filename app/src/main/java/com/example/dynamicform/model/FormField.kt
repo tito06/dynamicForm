@@ -1,4 +1,4 @@
-package com.example.dynamicform
+package com.example.dynamicform.model
 
 /*sealed class FormField(val id: String, val label: String) {
     data class TextField(val hint: String, val value: String = "") : FormField(id = "text", label = "Text Field")

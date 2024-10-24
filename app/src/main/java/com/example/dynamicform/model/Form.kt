@@ -1,4 +1,4 @@
-package com.example.dynamicform
+package com.example.dynamicform.model
 
 data class Form(
     val title :String,

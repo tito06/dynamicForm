@@ -1,4 +1,4 @@
-package com.example.dynamicform
+package com.example.dynamicform.model
 
 object FormDataStorage {
 
