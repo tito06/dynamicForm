@@ -1,6 +1,7 @@
 package com.example.dynamicform.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -39,7 +41,7 @@ fun FormScreen(navController: NavHostController, formViewModel: FormVm= viewMode
 
     val formFields = formViewModel.formFields
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp,50.dp,16.dp,16.dp)) {
         Text("Admin: Configure Your Form", style = MaterialTheme.typography.headlineSmall)
 
         // Add text field button
@@ -149,6 +151,9 @@ fun UserFormScreen() {
 
     val fieldValues = remember { mutableStateMapOf<String, Any>() }
 
+    var expanded by remember { mutableStateOf(false) }
+
+
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = form.title, style = MaterialTheme.typography.headlineMedium)
 
@@ -171,18 +176,26 @@ fun UserFormScreen() {
 
                 is FormField.DropdownField -> {
                     var selectedOption by remember { mutableStateOf(field.selectedOption) }
-                    DropdownMenu(
-                        expanded = true,
-                        onDismissRequest = {},
-                    ) {
-                        field.options.forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option) },
-                                onClick = {
-                                    selectedOption = option
-                                    fieldValues[field.label] = option
-                                }
-                            )
+                    Box {
+                        Button(
+                            onClick = { expanded = true },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(selectedOption)
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = {expanded = false},
+                        ) {
+                            field.options.forEach { option ->
+                                DropdownMenuItem(
+                                    text = { Text(option, color = Color.White) },
+                                    onClick = {
+                                        selectedOption = option
+                                        fieldValues[field.label] = option
+                                    }
+                                )
+                            }
                         }
                     }
                 }
